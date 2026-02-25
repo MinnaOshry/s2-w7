@@ -7,7 +7,10 @@ public class WildlifeSimulator {
     private int speciesCount;
     
     public WildlifeSimulator(int maxSpecies) {
-        //TODO
+        //TODO: initialize species array, scanner set up, read file into species, call addspecies
+        species = new Species[maxSpecies];
+        
+
     }
     
     /**
@@ -15,6 +18,8 @@ public class WildlifeSimulator {
      */
     public void addSpecies(Species s) {
         //TODO
+        species[speciesCount] = s;
+        speciesCount++;
     }
     
     /**
@@ -72,6 +77,17 @@ public class WildlifeSimulator {
     
     public int getSpeciesCount() {
         return speciesCount;
+    }
+    public String toString(){
+        String m = "";
+        for(Species s: species){
+            if (s != null){
+            m+= s.toString()+"/n";
+
+            }
+
+        }
+        return m;
     }
     
     /**
