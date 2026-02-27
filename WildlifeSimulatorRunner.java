@@ -49,7 +49,7 @@ public class WildlifeSimulatorRunner {
         // Display initial populations
         System.out.println("INITIAL POPULATIONS:");
         System.out.println("------------------");
-        
+        System.out.println(simulator);
         
         // Run simulation for 10 years and record data year-by-year
         int simulationYears = 10;

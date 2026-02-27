@@ -26,14 +26,23 @@ public class WildlifeSimulator {
      * Simulate one year of population changes for all species
      */
     public void simulateYear() {
-        //TODO
+        //TODO 1. call each species simulate year 
+        // //loop species array, for each object do right thing
+        
+        for(int i = 0; i < speciesCount; i++) {
+            species[i].simulateYear();
+        }
+
     }
     
     /**
      * Simulate multiple years
      */
     public void simulate(int years) {
-        //TODO
+        //TODO //TODO 1. loop for years, 2 eacher year call simulate year 
+        for (int i  =0; i<years; i++){
+            simulateYear();
+        }
     }
     
     /**
@@ -41,7 +50,10 @@ public class WildlifeSimulator {
      */
     public Species getSpecies(int index) {
         //TODO
-        return null;
+        if (index>=this.species.length){
+            throw new IllegalArgumentException(); 
+        }
+        return this.species[index];
     }
     
     /**
@@ -56,7 +68,13 @@ public class WildlifeSimulator {
      */
     public double getTotalPopulation() {
         //TODO
-        return 0.0;
+        int pop = 0;
+        for (Species s: species){
+            if(s!=null){
+                pop += s.getPopulation();
+            }
+        }
+        return pop;
     }
     
     /**
@@ -64,7 +82,13 @@ public class WildlifeSimulator {
      */
     public int getMostPopulousIndex() {
         //TODO
-        return -1;
+        int maxPopIndex = 0;
+        for( int x = 0; x<this.speciesCount; x++){
+            if(this.species[maxPopIndex].getPopulation() < this.species[x].getPopulation()){
+                maxPopIndex = x;
+            }
+        }
+        return maxPopIndex;
     }
     
     /**
@@ -82,7 +106,7 @@ public class WildlifeSimulator {
         String m = "";
         for(Species s: species){
             if (s != null){
-            m+= s.toString()+"/n";
+            m+= s.toString()+"\n";
 
             }
 

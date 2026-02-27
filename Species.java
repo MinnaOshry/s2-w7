@@ -58,6 +58,12 @@ public class Species {
      */
     public void simulateYear() {
         //TODO
+        
+        double delta = population * (birthRate - deathRate);
+        population+= delta;
+        if ( population> habitatCapacity){
+            population = habitatCapacity;
+        }
     }
     
     /**
