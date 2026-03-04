@@ -7,17 +7,18 @@ public class WildlifeSimulator {
     private int speciesCount;
     
     public WildlifeSimulator(int maxSpecies) {
-        //TODO: initialize species array, scanner set up, read file into species, call addspecies
+        // initialize species array and species count
         species = new Species[maxSpecies];
-        
-
+        speciesCount = 0;
     }
     
     /**
      * Add a species to the simulator
      */
     public void addSpecies(Species s) {
-        //TODO
+        if (speciesCount >= species.length) {
+            throw new IllegalStateException("Cannot add more species. Array is full.");
+        }
         species[speciesCount] = s;
         speciesCount++;
     }
@@ -26,66 +27,67 @@ public class WildlifeSimulator {
      * Simulate one year of population changes for all species
      */
     public void simulateYear() {
-        //TODO 1. call each species simulate year 
-        // //loop species array, for each object do right thing
-        
-        for(int i = 0; i < speciesCount; i++) {
+        for (int i = 0; i < speciesCount; i++) {
             species[i].simulateYear();
         }
-
     }
     
     /**
      * Simulate multiple years
      */
     public void simulate(int years) {
-        //TODO //TODO 1. loop for years, 2 eacher year call simulate year 
-        for (int i  =0; i<years; i++){
+        for (int i = 0; i < years; i++) {
             simulateYear();
         }
     }
-    
+
+    public void writeYear(int year) {
+        System.out.println("Year: " + year);
+        for (int i = 0; i < speciesCount; i++) {
+            System.out.println(species[i]);
+        }
+    }
+
     /**
      * Get species at given index
      */
     public Species getSpecies(int index) {
-        //TODO
-        if (index>=this.species.length){
-            throw new IllegalArgumentException(); 
+        if (index < 0 || index >= speciesCount) {
+            throw new IllegalArgumentException("Invalid species index.");
         }
-        return this.species[index];
+        return species[index];
     }
     
     /**
      * Get species info as formatted string
      */
     public String getSpeciesInfo(int index) {
-        return species[index].toString();
+        return getSpecies(index).toString();
     }
     
     /**
      * Get total wildlife count across all species
      */
     public double getTotalPopulation() {
-        //TODO
-        int pop = 0;
-        for (Species s: species){
-            if(s!=null){
-                pop += s.getPopulation();
-            }
+        double total = 0;
+        for (int i = 0; i < speciesCount; i++) {
+            total += species[i].getPopulation();
         }
-        return pop;
+        return total;
     }
     
     /**
      * Find the species with largest population
      */
     public int getMostPopulousIndex() {
-        //TODO
+        if (speciesCount == 0) {
+            return -1;
+        }
+
         int maxPopIndex = 0;
-        for( int x = 0; x<this.speciesCount; x++){
-            if(this.species[maxPopIndex].getPopulation() < this.species[x].getPopulation()){
-                maxPopIndex = x;
+        for (int i = 1; i < speciesCount; i++) {
+            if (species[i].getPopulation() > species[maxPopIndex].getPopulation()) {
+                maxPopIndex = i;
             }
         }
         return maxPopIndex;
@@ -95,23 +97,29 @@ public class WildlifeSimulator {
      * Find the species with smallest population (most endangered)
      */
     public int getMostEndangeredIndex() {
-        //TODO
-        return -1;
+        if (speciesCount == 0) {
+            return -1;
+        }
+
+        int minPopIndex = 0;
+        for (int i = 1; i < speciesCount; i++) {
+            if (species[i].getPopulation() < species[minPopIndex].getPopulation()) {
+                minPopIndex = i;
+            }
+        }
+        return minPopIndex;
     }
     
     public int getSpeciesCount() {
         return speciesCount;
     }
-    public String toString(){
-        String m = "";
-        for(Species s: species){
-            if (s != null){
-            m+= s.toString()+"\n";
 
-            }
-
+    public String toString() {
+        String result = "";
+        for (int i = 0; i < speciesCount; i++) {
+            result += species[i].toString() + "\n";
         }
-        return m;
+        return result;
     }
     
     /**
